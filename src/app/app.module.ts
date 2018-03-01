@@ -13,7 +13,7 @@ import {ListComponent} from './product/components/list/list.component';
 const routes: Routes = [{ path: "blop", component: ListComponent}];
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

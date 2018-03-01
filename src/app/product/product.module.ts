@@ -4,8 +4,10 @@ import { ProductComponent } from './components/product/product.component';
 import { ListComponent } from './components/list/list.component';
 import {ProductRoutingModule} from './product-routing.module';
 import { StatePipe } from './pipes/state.pipe';
-import {ProductFactoryservice} from "./product-factory.service";
-import {DetailComponent} from "./components/detail/detail.component";
+import { DetailComponent } from './components/detail/detail.component';
+import {ProductService} from './services/product.service';
+import {MagasinService} from './services/magasin.service';
+// import {ProductRepositoryService} from './services/product-repository.service';
 
 @NgModule({
   imports: [
@@ -15,9 +17,9 @@ import {DetailComponent} from "./components/detail/detail.component";
   declarations: [
     ProductComponent,
     ListComponent,
+    StatePipe,
     DetailComponent,
-    StatePipe
   ],
-  providers:[ProductFactoryservice]
+  providers: [ProductService, MagasinService]
 })
 export class ProductModule { }

@@ -1,34 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, RouterLinkActive} from '@angular/router';
-import {Produit} from "../../../models/produit";
-
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Produit} from '../../../models/produit';
+import {ProductService} from '../../services/product.service';
+// import {ProductRepositoryService} from '../../services/product-repository.service';
+//
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.css']
 })
-export class DetailComponent implements OnInit {
-  private _prodDetail: Produit;
-
-  get ProdDetail(): Produit {
-    return this._prodDetail;
-  }
-
-
-  set ProdDetail(value: Produit) {
-    this._prodDetail = value;
-  }
-
-  constructor(private route: ActivatedRoute)  { }
+export class DetailComponent implements OnInit, OnDestroy {
+  private subscription;
+  Produit: Produit;
+  constructor(private route: ActivatedRoute, private repo: ProductService) { }
 
   ngOnInit() {
-    let CodeBar;
-    this.route.params.subscribe( (params) => {
-      //get product by code barre
-      CodeBar = params["CodeBar"];
-
+    let cb;
+    this.subscription = this.route.params.subscribe((params) => {
+      cb = params["CodeBar"];
     });
-  }
 
+    this.Produit = this.repo.GetOneByCodeBar(cb);
+  }
+  ngOnDestroy(): void {
+    // this.subscription.u
+  }
 
 }
