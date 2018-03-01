@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="form-group">
+      <label for="displaySolde">Afficher les produits en solde ?</label>
+      <input type="checkbox" #solder name="displaySolde" id="displaySolde" (change)="SetProduit(solder.checked)">
+    </div>
+  </div>
+  <div class="row" *ngFor="let item of Produits | slice:(currentMax-5):currentMax, let i = index" [ngClass]="{solde: item.key.EnSolde, stock: !item.key.EnSolde}">
+    <div class="col-xs-6 col-sm-4 col-md-2"><img src="{{item.value | state }}">{{ item.key.Title }}</div>
+    <div class="col-xs-6 col-sm-4 col-md-2">{{ item.key.Description }}</div>
+    <div class="col-xs-6 col-sm-4 col-md-2">{{ item.key.Prix | currency:"EUR":true }}</div>
+    <div class="col-xs-6 col-sm-4 col-md-2">{{ item.value }}</div>
+    <div class="col-xs-6 col-sm-8 col-md-4">
+      <button *ngIf="!item.key.EnSolde" (click)="ToggleEnSolde(item.key)">Mettre en solde</button>
+      <button *ngIf="item.key.EnSolde && solder.checked" (click)="ToggleEnSolde(item.key)">Enlever la promo</button>
+      <button (click)="Acheter(item.key, i)">Acheter</button>
+      <button (click)="Commander(item.key, i)">Commander</button>
+      <button *ngIf="item.value <= 0" (click)="Supprimer(item.key, i)">Supprimer référence</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <button *ngIf="currentMax > 5" (click)="Pager(pageDown)" name="down" #pageDown>&lsaquo;&lsaquo;</button>
+      <button *ngIf="currentMax < Produits.length" (click)="Pager(pageUp)" name="up" #pageUp>&rsaquo;&rsaquo;</button>
+    </div>
+  </div>
+</div>
